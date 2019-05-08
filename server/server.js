@@ -7,6 +7,11 @@ const port = 3000;
 io.on('connection', socket => {
     console.log('a user connected!');
 
+    socket.on('message', msg => {
+        msg.id = socket.id;
+        io.emit('message', msg);
+    });
+
     socket.emit('getId', socket.id);
 });
 
