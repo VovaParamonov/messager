@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ImageBackground } from 'react-native';
+import {StyleSheet, Text, ScrollView,View, ImageBackground } from 'react-native';
 import io from 'socket.io-client';
 import constants from '../const'
 
@@ -12,7 +12,23 @@ export default class App extends Component {
 
       this.state = {
           id: 'none',
-          messages: ['test message', 'Еще одно тестовое сообщение']
+          messages: [
+              {text:'test_msg1', id:'none'},
+              {text:'test_msg2', id:'none'},
+              {text:'test_msg3', id:'none'},
+              {text:'test_msg4', id:'none'},
+              {text:'test_msg5', id:'none'},
+              {text:'test_msg6', id:'none'},
+              {text:'test_msg7', id:'none'},
+              {text:'test_msg8', id:'none'},
+              {text:'test_msg9', id:'none'},
+              {text:'test_msg10', id:'none'},
+              {text:'test_msg11', id:'none'},
+              {text:'test_msg12', id:'none'},
+              {text:'test_msg13', id:'none'},
+              {text:'test_msg14', id:'none'},
+              {text:'test_msg15', id:'none'},
+          ]
       };
   }
 
@@ -43,19 +59,21 @@ export default class App extends Component {
     return (
       <ImageBackground source={require('../src/assets/bg-min.png')} style={styles.main} >
           <TopBar id={this.state.id} />
-          <View style={styles.msgBox}  >
-              {this.state.messages.map(msg=> {
-                  const msgStyle = {
-                      color: (msg.id === this.state.id)?'#c2c8ff':'#c3c3c3',
-                      alignSelf: (msg.id === this.state.id)?'flex-end':'flex-start',
-                  };
-                  return (
-                      <Text key={msg.text} style={msgStyle}>
-                          {msg.text}
-                      </Text>
-                  )
-              })}
-          </View>
+          <ScrollView style={styles.msgBoxWrapper}  >
+              <View style={styles.msgBox}>
+                  {this.state.messages.map(msg=> {
+                      const msgStyle = {
+                          color: (msg.id === this.state.id)?'#c2c8ff':'#c3c3c3',
+                          alignSelf: (msg.id === this.state.id)?'flex-end':'flex-start',
+                      };
+                      return (
+                          <Text key={msg.text} style={msgStyle}>
+                              {msg.text}
+                          </Text>
+                      )
+                  })}
+              </View>
+          </ScrollView>
           <BottomBar messageSend={this.messageSend} />
       </ImageBackground>
     );
@@ -65,16 +83,22 @@ export default class App extends Component {
 const styles = StyleSheet.create({
     main: {
         height: '100%',
-        resizeMode: 'repeat'
+        resizeMode: 'repeat',
+
     },
     id: {
         top: 10,
         left: 10
     },
+    msgBoxWrapper: {
+        height: '100%',
+        flex: 1
+    },
     msgBox: {
         padding: 10,
-        marginTop: 20,
+        width: '100%',
         flex: 1,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        bottom: 0,
     }
 });
